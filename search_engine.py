@@ -48,23 +48,6 @@ def add_page_to_index(index,url,content):
 	for i in content.split():
 		add_to_index(index,url,i)
 
-def compute_ranks(graph):
-	d=0.8
-	numloops=10
-	ranks={}
-	npages=len(graph)
-	for page in graph:
-		ranks[page]=1.0/npages
-	for i in range(0,numloops):
-		newranks={}
-		for page in graph:
-			newrank=(1-d)/npages
-			for node in graph:
-				if page in graph[node]:
-					newrank=newrank+d*ranks[node]/len(graph[node])
-			newranks[page]=newrank
-		ranks=newranks
-	return ranks
 	
 def Crawl_web(seed):
 	tocrawl=[seed]
@@ -105,17 +88,6 @@ def QuickSort(pages,ranks):
 		QuickSort(pages[1:i],ranks)
 		QuickSort(pages[i+1:len(pages)],ranks)
 
-def Look_up_new(index,ranks,keyword):
-	pages=Look_up(index,keyword)
-	print '\nPrinting the results as is with page rank\n'
-	for i in pages:
-		print i+" --> "+str(ranks[i])
-	QuickSort(pages,ranks)
-	print "\nAfter Sorting the results by page rank\n"
-	it=0
-	for i in pages:
-		it+=1
-		print str(it)+'.\t'+i+'\n' 
 
 
 #print index
@@ -131,6 +103,4 @@ except:
 print '\nStarted crawling, presently at depth..'
 crawled,index,graph=Crawl_web(seed_page)
 
-ranks=compute_ranks(graph)
-Look_up_new(index,ranks,search_term)
 		
