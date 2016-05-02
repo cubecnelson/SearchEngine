@@ -5,11 +5,11 @@ def get_page(url):
 		f = urllib.urlopen(url)
 		page = f.read()
 		f.close()
-
 		return page
 	except:	
 		return ""
 	return ""
+
 def union(a,b):
 	for e in b:
 		if e not in a:
@@ -23,6 +23,7 @@ def get_next_url(page):
 	end_quote=page.find('"',start_quote+1)
 	url=page[start_quote+1:end_quote]
 	return url,end_quote
+
 def get_all_links(page):
 	links=[]
 	while(True):
@@ -69,24 +70,8 @@ def Crawl_web(seed):
 			union(tocrawl,f)
 			graph[p]=f
 			crawled.append(p)
-	return crawled,index,graph 
+	return crawled,index,graph
 
-
-
-
-
-def QuickSort(pages,ranks):
-	if len(pages)>1:
-		piv=ranks[pages[0]]
-		i=1
-		j=1
-		for j in range(1,len(pages)):
-			if ranks[pages[j]]>piv:
-				pages[i],pages[j]=pages[j],pages[i]
-				i+=1
-		pages[i-1],pages[0]=pages[0],pages[i-1]
-		QuickSort(pages[1:i],ranks)
-		QuickSort(pages[i+1:len(pages)],ranks)
 
 
 
